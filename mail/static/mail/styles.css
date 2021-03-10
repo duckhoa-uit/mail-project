@@ -1,0 +1,8 @@
+textarea {
+    min-height: 400px;
+}
+
+
+#email-body{
+    float: right;
+}

@@ -1,0 +1,64 @@
+{% extends "mail/layout.html" %}
+{% load static %}
+
+
+{% block script %}
+    <script src="{% static 'mail/inbox.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% endblock %}
+
+{% block body %}
+    <style>
+        table {
+            table-layout: fixed;
+        }
+        td {
+            text-align: left;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    </style>
+    <h2 id="email-user">{{ request.user.email }}</h2>
+
+    <button class="btn btn-sm btn-outline-primary" id="inbox">Inbox</button>
+    <button class="btn btn-sm btn-outline-primary" id="compose">Compose</button>
+    <button class="btn btn-sm btn-outline-primary" id="sent">Sent</button>
+    <button class="btn btn-sm btn-outline-primary" id="archived">Archived</button>
+    <a class="btn btn-sm btn-outline-primary" href="{% url 'logout' %}">Log Out</a>
+    <hr>
+    <div class="d-flex justify-content-center">
+        <div class="" id="spinner" role="status">
+          <span class="visually-hidden">Loading...</span>
+    </div>
+    </div>
+    <div id="emails-view"> 
+        <h3 id="mailbox-title" ></h3>
+        <div id="mailbox-content">
+            <table class="table table-hover overflow-hidden">
+                <tbody id="mailbox-emails"></tbody>
+            </table>
+        </div>       
+    </div>
+
+    <div id="email-detail">
+    </div>
+
+    <div id="compose-view">
+        <h3>New Email</h3>
+        <form id="compose-form">
+            <div class="form-group mb-3">
+                From: <input disabled=true class="form-control" value="{{ request.user.email }}">
+            </div>
+            <div class="form-group mb-3">
+                To: <input id="compose-recipients" class="form-control">
+                <div class="form-text">Put "," between multiple email addresses</div>
+            </div>
+            <div class="form-group mb-3">
+                <input type="text" class="form-control" id="compose-subject" placeholder="Subject">
+            </div>
+            <textarea required class="form-control mb-3" id="compose-body" placeholder="Body" rows="12"></textarea>
+            <input id="btn-send-email" type="submit" class="btn btn-primary"/>
+        </form>
+    </div>
+{% endblock %}
